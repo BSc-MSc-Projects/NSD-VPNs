@@ -1,0 +1,16 @@
+conf t
+
+interface FastEthernet0/0
+ip address 1.1.0.1 255.255.0.0
+no shutdown
+!
+
+exit 
+
+interface FastEthernet1/0
+ip addr 1.2.0.1 255.255.0.0
+no shutdown
+!
+
+ip route 3.0.0.0 255.0.0.0 1.2.0.2
+ip route 2.0.0.0 255.0.0.0 1.2.0.2
