@@ -95,10 +95,12 @@ interface FastEthernet0/0
 !
 interface FastEthernet1/0
  ip address 1.0.96.5 255.255.255.252
+ mpls ip
  no shutdown
 !
 interface FastEthernet2/0
  ip address 1.0.96.9 255.255.255.252
+ mpls ip
  no shutdown
 !
 ip route 1.0.0.0 255.255.192.0 1.0.96.1
@@ -114,6 +116,12 @@ router bgp 100
 route-map comm permit 10
  set community 100:1000
 
+router ospf 1
+router-id 1.0.64.1
+network 1.0.64.1 0.0.0.0 area 0
+network 1.0.96.0 0.0.0.3 area 0
+
+#forse devo togliere la parte eBGP
 
 
 
@@ -123,7 +131,45 @@ interface Loopback0
 !
 interface FastEthernet0/0
  ip address 1.0.96.6 255.255.255.252
+ mpls ip
  no shutdown
+!
+interface FastEthernet1/0
+ ip address 1.0.96.7 255.255.255.252
+ ip vrf forwarding vpnA
+ no shutdown
+!
+
+router ospf 1
+router-id 1.0.128.1
+network 1.0.128.1 0.0.0.0 area 0
+network 1.0.96.0 0.0.0.3 area 0
+
+ip vrf vpnA
+rd 100:0
+route-target export 100:2
+route-target import 100:1
+!
+
+router bgp 100
+neighbor 1.0.96.5 remote-as 100
+neighbor 1.0.96.5 next-hop-self
+
+
+router bgp 100
+ address-family vpnv4
+neighbor 1.0.96.5 activate
+neighbor 1.0.96.5 send-community extended
+neighbor 1.0.96.5 next-hop-self
+exit-address-family
+!
+ address-family ipv4 vrf vpnA
+network 6.5.1.1
+exit-address-family
+!
+
+ip route vrf vpnA 6.5.1.0 255.255.255.0 1.0.96.8
+
 
 
 R8 (Rbho)
@@ -132,10 +178,78 @@ interface Loopback0
 !
 interface FastEthernet0/0
  ip address 1.0.96.10 255.255.255.252
+ mpls ip
  no shutdown
+!
+interface FastEthernet1/0
+ ip address 1.0.96.11 255.255.255.252
+ ip vrf forwarding vpnA
+ no shutdown
+!
 
+router ospf 1
+router-id 1.0.129.1
+network 1.0.129.1 0.0.0.0 area 0
+network 1.0.96.0 0.0.0.3 area 0
+
+ip vrf vpnA
+rd 100:0
+route-target export 100:2
+route-target import 100:1
+!
+
+
+router bgp 100
+neighbor 1.0.96.9 remote-as 100
+neighbor 1.0.96.9 next-hop-self
+
+
+router bgp 100
+ address-family vpnv4
+neighbor 1.0.96.9 activate
+neighbor 1.0.96.9 send-community extended
+neighbor 1.0.96.9 next-hop-self
+exit-address-family
+!
+ address-family ipv4 vrf vpnA
+network 6.5.2.1
+exit-address-family
+!
  
- 
+ip route vrf vpnA 6.5.2.0 255.255.255.0 1.0.96.12
+
+
+
+
+OSPF e BGP/MPLS VPN
+
+R7
+interface FastEthernet0/0
+ip address 1.0.96.8 255.255.255.252
+duplex auto
+speed auto
+!
+interface FastEthernet1/0
+ip address 6.5.1.1 255.255.255.252
+no shutdown
+!
+ip route 0.0.0.0 0.0.0.0 1.0.96.7
+
+
+
+
+
+R9
+interface FastEthernet0/0
+ip address 1.0.96.12 255.255.255.252
+duplex auto
+speed auto
+!
+interface FastEthernet1/0
+ip address 6.5.2.1 255.255.255.252
+no shutdown
+!
+ip route 0.0.0.0 0.0.0.0 1.0.96.11
 
  
  
