@@ -19,6 +19,7 @@ network 1.255.0.4 0.0.0.0 area 0
 network 1.0.99.0 0.0.0.3 area 0
 network 1.0.100.0 0.0.0.7 area 0
 
+#fino qui buono!
 
 ip vrf vpnA
 rd 100:0

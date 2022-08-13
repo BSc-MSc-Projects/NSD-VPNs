@@ -1,0 +1,11 @@
+#ip route 10.0.0.0 255.0.0.0 1.0.96.1 (così funziona)
+
+
+#router bgp 100
+# network 1.0.0.0 mask 255.0.0.0 route-map comm
+# neighbor 1.0.96.1 remote-as 100 
+# neighbor 1.0.96.1 next-hop-self
+# neighbor 1.0.96.1 send-community
+ 
+#route-map comm permit 10
+# set community 100:1000

@@ -20,6 +20,7 @@ network 1.0.97.0 0.0.0.3 area 0
 network 1.0.98.0 0.0.0.7 area 0
 
 
+#fino qui buono!
 ip vrf vpnA
 rd 100:0
 route-target export 100:2
