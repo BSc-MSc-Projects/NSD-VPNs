@@ -1,7 +1,19 @@
-#ip route 1.0.64.0 255.255.224.0 1.0.96.2
-#ip route 1.0.96.4 255.255.255.252 1.0.96.2
-#ip route 1.0.96.8 255.255.255.252 1.0.96.2
-#ip route 1.0.0.0 255.255.128.0 null0
+conf t
+interface FastEthernet0/0
+ ip address 10.0.0.1 255.255.255.0
+ no shutdown
+!
+interface FastEthernet1/0
+ ip address 1.0.96.1 255.255.255.252
+ no shutdown
+!
+interface Loopback0
+ ip address 1.0.0.1 255.255.192.0
+!
+ip route 1.0.64.0 255.255.224.0 1.0.96.2
+ip route 1.0.96.4 255.255.255.252 1.0.96.2
+ip route 1.0.96.8 255.255.255.252 1.0.96.2
+ip route 1.0.0.0 255.255.128.0 null0
 
 
 router bgp 100
@@ -12,7 +24,6 @@ router bgp 100
  
  neighbor ixp-peer peer-group
  neighbor ixp-peer send-community
- neighbor ixp-peer route-map set-local-pref in
  neighbor ixp-peer route-map comm out
  neighbor 10.0.0.2 remote-as 200
  neighbor 10.0.0.2 peer-group ixp-peer
@@ -26,10 +37,12 @@ router bgp 100
  ip prefix-list pl-peer300 seq 5 permit 3.0.0.0/8
 
 route-map comm permit 10
- match community 10 11
- 
-route-map set-local-pref permit 10 
- set local-preference 150
+ match community 10
  
 ip bgp-community new-format
 ip community-list 10 permit 100:1000
+
+router ospf 1
+router-id 1.255.0.1
+network 1.255.0.1 0.0.0.0 area 0
+network 1.0.96.0 0.0.0.3 area 0
