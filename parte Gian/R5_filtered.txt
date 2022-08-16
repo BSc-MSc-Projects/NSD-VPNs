@@ -16,12 +16,11 @@ interface FastEthernet2/0
  mpls ip
  no shutdown
 !
-ip route 1.0.0.0 255.255.192.0 1.0.96.1
-ip route 1.0.0.0 255.255.128.0 null0
+ip route 1.0.0.0 255.0.0.0 null0
 
 
 router bgp 100
- network 1.0.0.0 mask 255.255.128.0 route-map comm
+ network 1.0.0.0 mask 255.0.0.0 route-map comm
  neighbor 1.0.96.1 remote-as 100 
  neighbor 1.0.96.1 next-hop-self
  neighbor 1.0.96.1 send-community
