@@ -8,9 +8,9 @@ interface FastEthernet1/0
  no shutdown
 !
 interface Loopback0
- ip address 1.0.0.1 255.255.192.0
+ ip address 1.255.0.1 255.255.255.255
 !
-ip route 1.0.64.0 255.255.224.0 1.0.96.2
+ip route 1.255.0.0 255.255.224.0 1.0.96.2
 
 
 router bgp 100
