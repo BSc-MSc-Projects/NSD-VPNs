@@ -2,16 +2,16 @@ conf t
 interface Loopback0
  ip address 1.255.0.2 255.255.255.255
 !
-interface FastEthernet0/0
+interface GigabitEthernet0/0
  ip address 1.0.96.2 255.255.255.252
  no shutdown
 !
-interface FastEthernet1/0
+interface GigabitEthernet1/0
  ip address 1.2.0.1 255.255.255.252
  mpls ip
  no shutdown
 !
-interface FastEthernet2/0
+interface GigabitEthernet2/0
  ip address 1.3.0.1 255.255.255.252
  mpls ip
  no shutdown
