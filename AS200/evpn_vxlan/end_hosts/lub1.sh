@@ -1,6 +1,5 @@
 ## Server A first machine, with 2 VMs ("emulated" by the use of network namespaces)
 #  Each Vm belongs to a different BD
-# NB: ALWAYS use the default route or cross ping is undoable
 
 ip netns add vmA
 ip netns add vmB

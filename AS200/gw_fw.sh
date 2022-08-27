@@ -1,3 +1,5 @@
+## Configuration file for linux gateway/firewall in AS200
+
 # Interface setup for VLAN 100
 ip link set enp0s8 up
 ip link add link enp0s8 name enp0s8.100 type vlan id 100
@@ -12,26 +14,26 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 
 # Firewall rules
 
-#iptables -A POSTROUTING -t nat -o enp0s3 -j MASQUERADE
-#iptables -A POSTROUTING -t nat -o enp0s8 -j MASQUERADE
-#
-#export WAN=enp0s3
-#export VLAN=enp0s8
-#
-## Firewall rules to allow only traffic from tun0
-#iptables -F #flush previous rules
-#
-#iptables -P FORWARD ACCEPT #[0:0]
-#iptables -P INPUT ACCEPT #[193:15624]
-#iptables -P OUTPUT ACCEPT #[58:3096]
-#iptables -A INPUT -i WAN -j ACCEPT
-#iptables -A INPUT -i VLAN -j ACCEPT
-#iptables -A FORWARD -i WAN -j ACCEPT
-#iptables -A FORWARD -o WAN -j ACCEPT
-#iptables -A FORWARD -i VLAN -j ACCEPT
-#iptables -A FORWARD -o VLAN -j ACCEPT
-#iptables -A OUTPUT -o WAN -j ACCEPT
-#iptables -A OUTPUT -o VLAN -j ACCEPT
-#
-#iptables -A FORWARD -i $WAN -o $VLAN -j ACCEPT
-#iptables -A FORWARD -i $VLAN -o $WAN -j ACCEPT
+# NAT to allow connection from overlay VPN
+iptables -A POSTROUTING -t nat -o enp0s8.100 -j MASQUERADE
+
+iptables -F
+iptables -P FORWARD DROP
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+
+# rules to establish overlay VPN
+iptables -A INPUT -i enp0s3 -p udp -m udp --sport 1194 -j ACCEPT
+iptables -A OUTPUT -o enp0s3 -p udp -m udp --dport 1194 -j ACCEPT
+
+iptables -A FORWARD -m state --state ESTABLISHED -j ACCEPT
+iptables -A INPUT -p udp -m udp --dport 1194 -j ACCEPT
+iptables -A INPUT -i tun0 -j ACCEPT
+iptables -A FORWARD -i tun0 -j ACCEPT
+iptables -A FORWARD -o tun0 -j ACCEPT
+iptables -A OUTPUT -p udp -m udp --sport 1194 -j ACCEPT
+iptables -A OUTPUT -o tun0 -j ACCEPT
+
+iptables -A INPUT -p icmp -j ACCEPT
+iptables -A FORWARD -p icmp -j ACCEPT
+iptables -A OUTPUT -p icmp -j ACCEPT
