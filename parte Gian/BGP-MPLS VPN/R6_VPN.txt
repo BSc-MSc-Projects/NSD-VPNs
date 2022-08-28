@@ -14,7 +14,3 @@ router bgp 100
 exit-address-family
 !
 
-
-
-#ip route vrf vpnA 6.5.1.0 255.255.255.0 1.2.1.2
-
