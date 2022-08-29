@@ -1,13 +1,13 @@
 conf t
 
-interface FastEthernet0/0
+interface GigabitEthernet3/0
 ip address 1.1.0.1 255.255.0.0
 no shutdown
 !
 
 exit 
 
-interface FastEthernet1/0
+interface GigabitEthernet0/0
 ip addr 1.2.0.1 255.255.0.0
 no shutdown
 !
