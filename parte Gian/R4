@@ -1,14 +1,36 @@
 conf t
+interface Loopback0
+ ip address 1.255.0.2 255.255.255.255
+!
 interface GigabitEthernet0/0
- ip address 10.0.0.3 255.255.255.0
+ ip address 1.0.96.2 255.255.255.252
  no shutdown
 !
-interface Loopback0
- ip address 3.0.0.1 255.0.0.0
+interface GigabitEthernet1/0
+ ip address 1.2.0.1 255.255.255.252
+ mpls ip
+ no shutdown
 !
+interface GigabitEthernet2/0
+ ip address 1.3.0.1 255.255.255.252
+ mpls ip
+ no shutdown
+!
+ip route 1.0.0.0 255.0.0.0 null0
 
 
-router bgp 300
- network 3.0.0.0 mask 255.0.0.0
- neighbor 10.0.0.1 remote-as 100
- neighbor 10.0.0.2 remote-as 200
+router bgp 100
+ network 1.0.0.0 mask 255.0.0.0 route-map comm
+ neighbor 1.0.96.1 remote-as 100 
+ neighbor 1.0.96.1 next-hop-self
+ neighbor 1.0.96.1 send-community
+ 
+route-map comm permit 10
+ set community 100:1000
+
+router ospf 1
+router-id 1.255.0.2
+network 1.255.0.2 0.0.0.0 area 0
+network 1.0.96.0 0.0.0.3 area 0
+network 1.2.0.0 0.0.0.3 area 0
+network 1.3.0.0 0.0.0.3 area 0

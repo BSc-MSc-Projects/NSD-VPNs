@@ -1,14 +1,14 @@
 conf t
 interface GigabitEthernet0/0
- ip address 10.0.0.2 255.255.255.0
+ ip address 10.0.0.3 255.255.255.0
  no shutdown
 !
 interface Loopback0
- ip address 2.0.0.1 255.0.0.0
+ ip address 3.0.0.1 255.0.0.0
 !
 
 
-router bgp 200
- network 2.0.0.0 mask 255.0.0.0
+router bgp 300
+ network 3.0.0.0 mask 255.0.0.0
  neighbor 10.0.0.1 remote-as 100
- neighbor 10.0.0.3 remote-as 300
+ neighbor 10.0.0.2 remote-as 200
