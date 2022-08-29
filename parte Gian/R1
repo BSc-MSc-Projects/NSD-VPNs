@@ -5,6 +5,7 @@ interface GigabitEthernet0/0
 !
 interface GigabitEthernet1/0
  ip address 1.0.96.1 255.255.255.252
+ mpls ip
  no shutdown
 !
 interface Loopback0
