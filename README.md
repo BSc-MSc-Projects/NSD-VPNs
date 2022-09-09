@@ -16,8 +16,8 @@ For this topology, the following VM isos have been used:
 
 ### eBGP between AS100, AS200 and AS300
 The comunication between the ASes is managed by eBGP protocol. Each AS has a border router linked to the IXP LAN
-and comunicate the network behind him to the others routers. Only the router in AS100 applies route filtering.
-The configuration of the routers is in the folder `eBGP and OSPF`
+and comunicate the network behind it to the others routers. Only the router in AS100 applies route filtering.
+The configuration of the routers is in the folder `eBGP and OSPF`.
 
 ### OSPF - MPLS in AS100
 Inside the AS100, the routers exchange information about the sub-networks they manage using the OSPF protocol. In addition, the packets travel in the AS through the use of labels, by means of the MPLS protocol. The configuration is in the folder `eBGP and OSPF`.
@@ -25,10 +25,10 @@ Inside the AS100, the routers exchange information about the sub-networks they m
 ### BGP/MPLS VPN between cusomer site A and site B
 The VPN permit to a packet in site A to reach the other site and vice versa. Packets travel again using MPLS protocol inside the AS100.
 Only packets belonging to the VPN can travel this path, because the physical address informations are not widely propagated.
-In order to establish the VPN, the previous OSPF configuration is required. The files are stored in the folder `BGP-MPLS VPN`
+In order to establish the VPN, the previous OSPF configuration is required. The files are stored in the folder `BGP-MPLS VPN`.
 
 ### AS200
-AS is composed of 
+AS is composed of: 
 
 - a datacenter, in which there is a EVPN/VXLAN
 - an access gateway and firewall, that allows the datacenter to be reached from WAN
@@ -77,4 +77,3 @@ Directory `OverlayVPN` mantain all files for Overlay VPN configuration, it's org
 - AS100 OpenVPN `Server` : 10.8.0.0 255.255.0.0
 - AS300 Openvpn `client1`: 10.8.1.1 10.8.1.2
 - AS200 Openvpn `client2`: 10.8.2.1 10.8.2.2
-
