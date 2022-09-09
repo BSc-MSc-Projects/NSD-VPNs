@@ -2,7 +2,7 @@
 NSD network topology project (Prof. Bonola).
 
 ## Topology overview
-![](immagini/topology.png)
+![](presentazione/immagini/topology.png)
 For this topology, the following VM isos have been used:
 
 | Machine name                                     | ISO               |
