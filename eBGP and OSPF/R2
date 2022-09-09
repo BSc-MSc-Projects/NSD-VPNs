@@ -5,6 +5,7 @@ interface GigabitEthernet0/0
 !
 interface GigabitEthernet1/0
  ip address 2.0.0.1 255.0.0.0
+ no shutdown
 !
 
 
