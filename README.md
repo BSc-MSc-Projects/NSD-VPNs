@@ -2,12 +2,12 @@
 NSD network topology project (Prof. Bonola).
 
 ## Topology overview
-![](topology.png)
+![](immagini/topology.png)
 For this topology, the following VM isos have been used:
 
 | Machine name                                     | ISO               |
 | :----------------------------------------------- | :---------------- |
-| R1-9                                             | Cisco router 7200 |
+| R1-8                                             | Cisco router 7200 |
 | opevpn-client1, server 1 and 2, customer A and B | lubuntu           |
 | VPN-server, gw-fw-openvpn-client2                | ubuntu server     |
  
