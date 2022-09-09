@@ -5,11 +5,11 @@ NSD network topology project (Prof. Bonola).
 ![](topology.png)
 For this topology, the following VM isos have been used:
 
-| Machine name   | ISO    |
-|--------------- | --------------- |
-| R1-9   | Cisco router 7200   |
-| opevpn-client1, server 1 and 2, customer A and B  | lubuntu   |
-| VPN-server, gw-fw-openvpn-client2  | ubuntu server   |
+| Machine name                                     | ISO               |
+| :----------------------------------------------- | :---------------- |
+| R1-9                                             | Cisco router 7200 |
+| opevpn-client1, server 1 and 2, customer A and B | lubuntu           |
+| VPN-server, gw-fw-openvpn-client2                | ubuntu server     |
  
 
 ## Configuration
@@ -44,5 +44,37 @@ Finally, `gw_fw.sh` is the configuration file for the linux gateway and firewall
 To run the scripts, just give it the proper execution permission with `chmod +x filename.sh`.<br>
 
 
-### Overlay VPN
+### Overlay VPN and relative topology
+
+
+Directory `OverlayVPN` mantain all files for Overlay VPN configuration, it's organized in different sub-directory:
+
+1. `Topology config`: Files for topology configuration
+   1. `client1.sh`: topology file for client1, machine in AS300
+   2. `client1.sh`: topology file for client2, getway in AS200
+   3. `server.sh` : topology file for server , machine in AS100 
+2. `Client1`: Files for client1 setup
+   1. `client1.conf`: OpenVPN configuration file 
+   2. `ca.crt`: public certificate of the Certification Authority
+   3. `client1.crt`: public certificate of the client
+   4. `client1.key`: private key of the client
+3. `Client2`: Files for client2 setup
+   1. `client2.conf`: OpenVPN configuration file 
+   2. `ca.crt`: public certificate of the Certification Authority
+   3. `client2.crt`: public certificate of the client
+   4. `client2.key`: private key of the client
+4. `Server`: Files for server setup
+   1.  Directory `ccd`: client configuration directory, mantain client specific configuration
+   2.  `server.conf`: OpenVPN configuration file
+   3.  `ca.crt`: public certificate of the Certification Authority
+   4.  `ca.key`: private key of the Certification Authority
+   5.  `dh.pem`: Diffie-Hellman parameter
+   6.  `server.crt`: public certificate of the server
+   7.  `server.key`: private key of the server
+
+#### Overlay VPN addresses:
+
+- AS100 OpenVPN `Server` : 10.8.0.0 255.255.0.0
+- AS300 Openvpn `client1`: 10.8.1.1 10.8.1.2
+- AS200 Openvpn `client2`: 10.8.2.1 10.8.2.2
 
