@@ -13,6 +13,7 @@ ip route add 10.1.1.0/24 via 10.3.3.254 dev enp0s8.100
 echo 1 > /proc/sys/net/ipv4/ip_forward
 
 # Firewall rules
+iptables -A POSTROUTING -t nat -o enp0s3 -j MASQUERADE
 
 # NAT to allow connection from overlay VPN
 iptables -A POSTROUTING -t nat -o enp0s8.100 -j MASQUERADE
